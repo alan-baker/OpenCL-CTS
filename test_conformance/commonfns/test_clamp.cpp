@@ -22,6 +22,9 @@
 
 #include "procs.h"
 
+#undef kTotalVecCount
+#define kTotalVecCount 3
+
 #ifndef M_PI
 #define M_PI    3.14159265358979323846264338327950288
 #endif
@@ -74,8 +77,8 @@ CLAMP_KERNEL_V( double, 16 )
 CLAMP_KERNEL_V3( double, 3 )
 #undef EMIT_PRAGMA_DIRECTIVE
 
-const char *clamp_float_codes[] = { clamp_float_kernel_code, clamp_float2_kernel_code, clamp_float4_kernel_code, clamp_float8_kernel_code, clamp_float16_kernel_code, clamp_float3_kernel_code };
-const char *clamp_double_codes[] = { clamp_double_kernel_code, clamp_double2_kernel_code, clamp_double4_kernel_code, clamp_double8_kernel_code, clamp_double16_kernel_code, clamp_double3_kernel_code };
+const char *clamp_float_codes[] = { clamp_float_kernel_code, clamp_float2_kernel_code, clamp_float4_kernel_code/*, clamp_float8_kernel_code, clamp_float16_kernel_code, clamp_float3_kernel_code*/ };
+const char *clamp_double_codes[] = { clamp_double_kernel_code/*, clamp_double2_kernel_code, clamp_double4_kernel_code, clamp_double8_kernel_code, clamp_double16_kernel_code, clamp_double3_kernel_code*/ };
 
 static int verify_clamp(float *x, float *minval, float *maxval, float *outptr, int n)
 {

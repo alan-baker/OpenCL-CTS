@@ -97,10 +97,10 @@ void vector2string( char *string, float *vector, size_t elements )
 {
     *string++ = '{';
     *string++ = ' ';
-    string += sprintf( string, "%a", vector[0] );
+    string += sprintf( string, "%f", vector[0] );
     size_t i;
     for( i = 1; i < elements; i++ )
-        string += sprintf( string, ", %a", vector[i] );
+        string += sprintf( string, ", %f", vector[i] );
     *string++ = ' ';
     *string++ = '}';
     *string = '\0';
@@ -330,7 +330,11 @@ int test_twoToFloat_kernel(cl_command_queue queue, cl_context context, const cha
     cl_float *outData = C;
 
     /* Create the source */
-    sprintf( kernelSource, vecSize == 3 ? twoToFloatKernelPatternV3 : twoToFloatKernelPattern, sizeNames[vecSize-1], sizeNames[vecSize-1], fnName );
+    if (vecSize == 3) {
+       sprintf( kernelSource, twoToFloatKernelPatternV3, "4", "4", fnName );
+    } else {
+       sprintf( kernelSource, twoToFloatKernelPattern, sizeNames[vecSize-1], sizeNames[vecSize-1], fnName );
+    }
 
     /* Create kernels */
     programPtr = kernelSource;
@@ -448,7 +452,7 @@ int test_twoToFloat_kernel(cl_command_queue queue, cl_context context, const cha
                 if( error > errorTolerance )
                 {
 
-                    log_error( "ERROR: Data sample %d at size %d does not validate! Expected (%a), got (%a), sources (%a and %a) error of %g against tolerance %g\n",
+                    log_error( "ERROR: Data sample %d at size %d does not validate! Expected (%f), got (%f), sources (%a and %a) error of %g against tolerance %g\n",
                               (int)i, (int)vecSize, expected,
                               outData[ i ],
                               inDataA[i*vecSize],
@@ -468,7 +472,7 @@ int test_twoToFloat_kernel(cl_command_queue queue, cl_context context, const cha
                 float error = Ulp_Error( outData[ i ], expected );
                 if( fabsf(error) > ulpLimit )
                 {
-                    log_error( "ERROR: Data sample %d at size %d does not validate! Expected (%a), got (%a), sources (%a and %a) ulp of %f\n",
+                    log_error( "ERROR: Data sample %d at size %d does not validate! Expected (%f), got (%f), sources (%a and %a) ulp of %f\n",
                               (int)i, (int)vecSize, expected, outData[ i ], inDataA[i*vecSize], inDataB[i*vecSize], error );
 
                     char vecA[1000], vecB[1000];
@@ -499,7 +503,7 @@ double verifyDot( float *srcA, float *srcB, size_t vecSize )
 
 int test_geom_dot(cl_device_id deviceID, cl_context context, cl_command_queue queue, int num_elements)
 {
-    size_t sizes[] = { 1, 2, 3, 4, 0 };
+    size_t sizes[] = { /*1, 2,*/ 3, /*4,*/ 0 };
     unsigned int size;
     int retVal = 0;
     RandomSeed seed(gRandomSeed);
@@ -645,7 +649,15 @@ int test_oneToFloat_kernel(cl_command_queue queue, cl_context context, const cha
     cl_float *outData = B;
 
     /* Create the source */
-    sprintf( kernelSource, vecSize == 3? oneToFloatKernelPatternV3 : oneToFloatKernelPattern, sizeNames[vecSize-1], fnName );
+    if (vecSize == 3)
+    {
+       sprintf( kernelSource,oneToFloatKernelPatternV3, "4", fnName );
+    }
+    else
+    {
+       sprintf( kernelSource,oneToFloatKernelPattern, sizeNames[vecSize-1], fnName );
+    }
+    //sprintf( kernelSource, vecSize == 3? oneToFloatKernelPatternV3 : oneToFloatKernelPattern, sizeNames[vecSize-1], fnName );
 
     /* Create kernels */
     programPtr = kernelSource;
@@ -859,7 +871,15 @@ int test_oneToOne_kernel(cl_command_queue queue, cl_context context, const char 
     float ulp_error = 0;
 
     /* Create the source */
-    sprintf( kernelSource, vecSize == 3 ? oneToOneKernelPatternV3: oneToOneKernelPattern, sizeNames[vecSize-1], sizeNames[vecSize-1], fnName );
+    if (vecSize == 3)
+    {
+        sprintf( kernelSource, oneToOneKernelPatternV3, "4", "4", fnName );
+    }
+    else
+    {
+        sprintf( kernelSource, oneToOneKernelPattern, sizeNames[vecSize-1], sizeNames[vecSize-1], fnName );
+    }
+    //sprintf( kernelSource, vecSize == 3 ? oneToOneKernelPatternV3: oneToOneKernelPattern, sizeNames[vecSize-1], sizeNames[vecSize-1], fnName );
 
     /* Create kernels */
     programPtr = kernelSource;

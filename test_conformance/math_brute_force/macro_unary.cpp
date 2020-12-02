@@ -543,7 +543,7 @@ static cl_int TestFloat( cl_uint job_id, cl_uint thread_id, void *data )
                 uint32_t err = t[j] - q[j];
                 if( q[j] > t[j] )
                     err = q[j] - t[j];
-                vlog_error( "\nERROR: %s: %d ulp error at %a: *%d vs. %d\n", name,  err, ((float*) s)[j], t[j], q[j] );
+                vlog_error( "\nERROR: %s: %d ulp error at %a: *%d vs. %d, 0x%08x\n", name,  err, ((float*) s)[j], t[j], q[j], s[j] );
                 error = -1;
                 goto exit;
             }

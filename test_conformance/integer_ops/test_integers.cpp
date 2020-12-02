@@ -225,8 +225,8 @@ int test_single_param_integer_kernel(cl_command_queue queue, cl_context context,
 
 int test_single_param_integer_fn( cl_command_queue queue, cl_context context, const char *fnName, singleParamIntegerVerifyFn verifyFn, bool useOpKernel = false )
 {
-    ExplicitType types[] = { kChar, kUChar, kShort, kUShort, kInt, kUInt, kLong, kULong, kNumExplicitTypes };
-    unsigned int vecSizes[] = { 1, 2, 3, 4, 8, 16, 0 }; // TODO 3 not tested
+    ExplicitType types[] = { /*kChar, kUChar,*/ kShort, kUShort, kInt, kUInt, /*kLong, kULong,*/ kNumExplicitTypes };
+    unsigned int vecSizes[] = { 1, 2, 3, 4, /*8, 16,*/ 0 }; // TODO 3 not tested
     unsigned int index, typeIndex;
     int retVal = 0;
     RandomSeed seed(gRandomSeed );
@@ -774,8 +774,8 @@ int test_two_param_integer_kernel(cl_command_queue queue, cl_context context, co
 
 int test_two_param_integer_fn(cl_command_queue queue, cl_context context, const char *fnName, twoParamIntegerVerifyFn verifyFn)
 {
-    ExplicitType types[] = { kChar, kUChar, kShort, kUShort, kInt, kUInt, kLong, kULong, kNumExplicitTypes };
-    unsigned int vecSizes[] = { 1, 2, 3, 4, 8, 16, 0 }; // TODO : 3 not tested
+    ExplicitType types[] = { /*kChar, kUChar,*/ kShort, kUShort, kInt, kUInt, /*kLong, kULong,*/ kNumExplicitTypes };
+    unsigned int vecSizes[] = { 1, 2, 3, 4, /*8, 16,*/ 0 }; // TODO : 3 not tested
     unsigned int index, typeIndex;
     int retVal = 0;
     RandomSeed seed(gRandomSeed );
@@ -1443,8 +1443,8 @@ int test_three_param_integer_kernel(cl_command_queue queue, cl_context context, 
 
 int test_three_param_integer_fn(cl_command_queue queue, cl_context context, const char *fnName, threeParamIntegerVerifyFn verifyFn)
 {
-    ExplicitType types[] = { kChar, kUChar, kShort, kUShort, kInt, kUInt, kLong, kULong, kNumExplicitTypes };
-    unsigned int vecSizes[] = { 1, 2, 3, 4, 8, 16, 0 };
+    ExplicitType types[] = { /*kChar, kUChar,*/ kShort, kUShort, kInt, kUInt, /*kLong, kULong,*/ kNumExplicitTypes };
+    unsigned int vecSizes[] = { 1, 2, 3, 4, /*8, 16,*/ 0 };
     unsigned int index, typeAIndex;
     int retVal = 0;
     RandomSeed seed(gRandomSeed);

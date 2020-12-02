@@ -727,7 +727,12 @@ int TestFunc_Float_Float_Float_Float(const Func *f, MTdata d, bool relaxedMode)
 
                     if( fail )
                     {
-                        vlog_error( "\nERROR: %s%s: %f ulp error at {%a, %a, %a} ({0x%8.8x, 0x%8.8x, 0x%8.8x}): *%a vs. %a\n", f->name, sizeNames[k], err, s[j], s2[j], s3[j], ((cl_uint*)s)[j], ((cl_uint*)s2)[j], ((cl_uint*)s3)[j],  ((float*) gOut_Ref)[j], test );
+                        union {
+                          float x;
+                          uint32_t y;
+                        } u;
+                        u.x = test;
+                        vlog_error( "\nERROR: %s%s: %f ulp error at {%a, %a, %a} ({0x%8.8x, 0x%8.8x, 0x%8.8x}): *%a vs. %a (*0x%8.8x vs 0x%8.8x)\n", f->name, sizeNames[k], err, s[j], s2[j], s3[j], ((cl_uint*)s)[j], ((cl_uint*)s2)[j], ((cl_uint*)s3)[j],  ((float*) gOut_Ref)[j], test, ((uint32_t*)gOut_Ref)[j], u.y );
                         error = -1;
                         goto exit;
                     }

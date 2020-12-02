@@ -309,7 +309,7 @@ int TestFunc_Int_Float(const Func *f, MTdata d, bool relaxedMode)
                     uint32_t err = t[j] - q[j];
                     if( q[j] > t[j] )
                         err = q[j] - t[j];
-                    vlog_error( "\nERROR: %s%s: %d ulp error at %a (0x%8.8x): *%d vs. %d\n", f->name, sizeNames[k], err, ((float*) gIn)[j], ((cl_uint*) gIn)[j], t[j], q[j] );
+                    vlog_error( "\nERROR: %s%s: %d ulp error at %a (0x%8.8x): *%d vs. %d, %x\n", f->name, sizeNames[k], err, ((float*) gIn)[j], ((cl_uint*) gIn)[j], t[j], q[j], ((cl_uint*) gIn)[j] );
                   error = -1;
                   goto exit;
                 }

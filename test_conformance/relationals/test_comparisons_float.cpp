@@ -266,7 +266,7 @@ int test_equiv_kernel_float(cl_context context, cl_command_queue queue, const ch
 
 int test_equiv_kernel_set_float(cl_context context, cl_command_queue queue, const char *fnName, const char *opName, equivVerifyFn verifyFn, MTdata d )
 {
-    unsigned int vecSizes[] = { 1, 2, 3, 4, 8, 16, 0 };
+    unsigned int vecSizes[] = { 1, 2, 3, 4,/* 8, 16,*/ 0 };
     unsigned int index;
     int retVal = 0;
 

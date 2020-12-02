@@ -94,7 +94,10 @@ verify_smoothstep(float *edge0, float *edge1, float *x, float *outptr, int n)
   return max_err;
 }
 
-const static char *fn_names[] = { "SMOOTHSTEP float", "SMOOTHSTEP float2", "SMOOTHSTEP float4", "SMOOTHSTEP float8", "SMOOTHSTEP float16", "SMOOTHSTEP float3" };
+const static char *fn_names[] = { "SMOOTHSTEP float", "SMOOTHSTEP float2", "SMOOTHSTEP float4"/*, "SMOOTHSTEP float8", "SMOOTHSTEP float16"*/, "SMOOTHSTEP float3" };
+
+#undef kTotalVecCount
+#define kTotalVecCount 4
 
 int
 test_smoothstep(cl_device_id device, cl_context context, cl_command_queue queue, int n_elems)
@@ -203,13 +206,14 @@ test_smoothstep(cl_device_id device, cl_context context, cl_command_queue queue,
   err = create_single_kernel_helper( context, &program[2], &kernel[2], 1, &smoothstep4_kernel_code, "test_smoothstep4" );
   if (err)
     return -1;
-  err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &smoothstep8_kernel_code, "test_smoothstep8" );
-  if (err)
-    return -1;
-  err = create_single_kernel_helper( context, &program[4], &kernel[4], 1, &smoothstep16_kernel_code, "test_smoothstep16" );
-  if (err)
-    return -1;
-  err = create_single_kernel_helper( context, &program[5], &kernel[5], 1, &smoothstep3_kernel_code, "test_smoothstep3" );
+  //err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &smoothstep8_kernel_code, "test_smoothstep8" );
+  //if (err)
+  //  return -1;
+  //err = create_single_kernel_helper( context, &program[4], &kernel[4], 1, &smoothstep16_kernel_code, "test_smoothstep16" );
+  //if (err)
+  //  return -1;
+  //err = create_single_kernel_helper( context, &program[5], &kernel[5], 1, &smoothstep3_kernel_code, "test_smoothstep3" );
+  err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &smoothstep3_kernel_code, "test_smoothstep3" );
   if (err)
     return -1;
 
@@ -245,7 +249,8 @@ test_smoothstep(cl_device_id device, cl_context context, cl_command_queue queue,
       return -1;
     }
 
-    max_err = verify_smoothstep(input_ptr[0], input_ptr[1], input_ptr[2], output_ptr, n_elems * g_arrVecSizes[i]);
+    int vec_size = (i == (kTotalVecCount - 1)) ? 3 : g_arrVecSizes[i];
+    max_err = verify_smoothstep(input_ptr[0], input_ptr[1], input_ptr[2], output_ptr, n_elems * vec_size);
 
     if (max_err > MAX_ERR)
     {

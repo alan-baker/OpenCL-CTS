@@ -97,7 +97,10 @@ verify_sign(float *inptr, float *outptr, int n)
   return 0;
 }
 
-static const char *fn_names[] = { "SIGN float", "SIGN float2", "SIGN float4", "SIGN float8", "SIGN float16", "SIGN float3" };
+#undef kTotalVecCount
+#define kTotalVecCount 4
+
+static const char *fn_names[] = { "SIGN float", "SIGN float2", "SIGN float4"/*, "SIGN float8", "SIGN float16"*/, "SIGN float3" };
 
 int
 test_sign(cl_device_id device, cl_context context, cl_command_queue queue, int n_elems)
@@ -158,13 +161,14 @@ test_sign(cl_device_id device, cl_context context, cl_command_queue queue, int n
   err = create_single_kernel_helper( context, &program[2], &kernel[2], 1, &sign4_kernel_code, "test_sign4" );
   if (err)
     return -1;
-  err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &sign8_kernel_code, "test_sign8" );
-  if (err)
-    return -1;
-  err = create_single_kernel_helper( context, &program[4], &kernel[4], 1, &sign16_kernel_code, "test_sign16" );
-  if (err)
-    return -1;
-  err = create_single_kernel_helper( context, &program[5], &kernel[5], 1, &sign3_kernel_code, "test_sign3" );
+  //err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &sign8_kernel_code, "test_sign8" );
+  //if (err)
+  //  return -1;
+  //err = create_single_kernel_helper( context, &program[4], &kernel[4], 1, &sign16_kernel_code, "test_sign16" );
+  //if (err)
+  //  return -1;
+  //err = create_single_kernel_helper( context, &program[5], &kernel[5], 1, &sign3_kernel_code, "test_sign3" );
+  err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &sign3_kernel_code, "test_sign3" );
   if (err)
     return -1;
 
@@ -373,15 +377,15 @@ test_sign_double(cl_device_id device, cl_context context, cl_command_queue queue
   err = create_single_kernel_helper( context, &program[2], &kernel[2], 1, &sign4_kernel_code_double, "test_sign4_double" );
   if (err)
     return -1;
-  err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &sign8_kernel_code_double, "test_sign8_double" );
-  if (err)
-    return -1;
-  err = create_single_kernel_helper( context, &program[4], &kernel[4], 1, &sign16_kernel_code_double, "test_sign16_double" );
-  if (err)
-    return -1;
-  err = create_single_kernel_helper( context, &program[5], &kernel[5], 1, &sign3_kernel_code_double, "test_sign3_double" );
-  if (err)
-    return -1;
+  //err = create_single_kernel_helper( context, &program[3], &kernel[3], 1, &sign8_kernel_code_double, "test_sign8_double" );
+  //if (err)
+  //  return -1;
+  //err = create_single_kernel_helper( context, &program[4], &kernel[4], 1, &sign16_kernel_code_double, "test_sign16_double" );
+  //if (err)
+  //  return -1;
+  //err = create_single_kernel_helper( context, &program[5], &kernel[5], 1, &sign3_kernel_code_double, "test_sign3_double" );
+  //if (err)
+  //  return -1;
 
   values[0] = streams[0];
   values[1] = streams[1];
